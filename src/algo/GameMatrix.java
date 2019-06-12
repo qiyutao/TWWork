@@ -1,7 +1,5 @@
 package algo;
 
-import sun.nio.cs.FastCharsetProvider;
-
 public class GameMatrix {
 	// 随机点数目
 	private int randomCluster;
