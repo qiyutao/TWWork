@@ -12,7 +12,7 @@ public class GameMatrix {
 	private int height;
 
 	public GameMatrix(int width, int height, int randomCluster) {
-		matrix = new boolean[width][height];
+		matrix = new boolean[height][width];
 		
 		this.width = width;
 		this.height = height;
@@ -44,20 +44,23 @@ public class GameMatrix {
 	
 	//TODO:refactor
 	private void nextMatrix() {
+		boolean[][] newMat = new boolean[height][width] ;
 		for(int i = 0;i<height;i++) {
 			for (int j = 0; j < width; j++) {
 				int lifeNum = aroundLife(i, j);
 				if(lifeNum<2) {
-					matrix[i][j] = false;
+					newMat[i][j] = false;
 				} else if(lifeNum==2 && matrix[i][j]) {
-					matrix[i][j] = true;
+					newMat[i][j] = true;
 				} else if(lifeNum==3) {
-					matrix[i][j] = true;
+					newMat[i][j] = true;
 				} else {
-					matrix[i][j] = false;
+					newMat[i][j] = false;
 				}
 			}
 		}
+		
+		matrix = newMat;
 	}
 	
 	private int aroundLife(int row,int col) {
