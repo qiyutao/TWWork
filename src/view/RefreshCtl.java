@@ -22,7 +22,7 @@ public class RefreshCtl implements Runnable{
 			gameController.nextStep();
 			algoFrame.repaint();
 			try {
-				Thread.sleep(refreshPeriod);
+				Thread.sleep(refreshPeriod + 15);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

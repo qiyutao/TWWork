@@ -35,8 +35,8 @@ public class AlgoFrame extends JFrame {
 	private GameController controller;
 	
 	// 分辨率
-	private static final int RESOLUTION_X = 1800;
-	private static final int RESOLUTION_Y = 768;
+	private static final int RESOLUTION_X = 1920;
+	private static final int RESOLUTION_Y = 1080;
 	
 	public AlgoFrame(String title) {
 		this(title, RESOLUTION_X, RESOLUTION_Y);
@@ -63,7 +63,7 @@ public class AlgoFrame extends JFrame {
 		//timePeriod =
 		int clusterInit = 3000;  
 		// start Controller 
-		controller = new GameController(timePeriod, clusterInit, RESOLUTION_X /2, RESOLUTION_Y / 2); 
+		controller = new GameController(clusterInit, RESOLUTION_X / LifeCircle.R, RESOLUTION_Y / LifeCircle.R); 
 		
 		circles = controller.getLives();
 		
@@ -116,19 +116,16 @@ public class AlgoFrame extends JFrame {
 			// 设置笔刷信息
 			AlgoVisHelper.setStrokeWidth(graphics2d, 10);
 			
-//			if (new Random().nextDouble() < 0.5)
-//				graphics2d.setColor(Color.RED);
-//			else
 			graphics2d.setColor(Color.BLUE);
 			// 实心
 			for (int i = 0;i < circles.length; ++ i) {
 				for (int j = 0; j < circles[0].length; ++ j) {
 					LifeCircle circle = circles[i][j];
 					if (circle.isAlive())
-						AlgoVisHelper.fillCircle(graphics2d, circle.getX(), circle.getY(), 2);
+						AlgoVisHelper.fillCircle(graphics2d, circle.getY(), circle.getX(), LifeCircle.R);
+//						AlgoVisHelper.fillCircle(graphics2d, circle.getX(), circle.getY(), LifeCircle.R);
 				}
 			}
-//			AlgoVisHelper.fillCircle(graphics2d, canvasWidth / 2, canvasHeight / 2, 200);
 			this.removeAll();
 		}
 

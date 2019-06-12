@@ -11,11 +11,11 @@ public class GameController {
 	
 	private GameMatrix matrix;
 
-	public GameController(int timePeriod, int clusterInit, int resolutionX, int resolutionY) {
-		this.dimensionX = resolutionX / 2;
-		this.dimensionY = resolutionY / 2;
-		matrix = new GameMatrix(this.dimensionX, this.dimensionY, clusterInit);
-		lives = new LifeCircle[this.dimensionY][this.dimensionX];
+	public GameController(int clusterInit, int resolutionX, int resolutionY) {
+		dimensionX = resolutionX / 2;
+		dimensionY = resolutionY / 2;
+		matrix = new GameMatrix(dimensionX, dimensionY, clusterInit);
+		lives = new LifeCircle[dimensionY][dimensionX];
 		boolean[][] initLife = matrix.init();
 		for (int i = 0; i < this.dimensionY; i++) {
 			for (int j = 0; j < this.dimensionX; j++) {
@@ -34,7 +34,6 @@ public class GameController {
 		this.updateLives(matrix.getMatrix());
 		return lives;
 	}
-	
 	
 	public void updateLives(boolean[][] life) {
 		for (int i = 0; i < this.dimensionY; i++) {

@@ -11,7 +11,7 @@ public class LifeCircle {
 	private int x,y;
 	
 	// 圆的半径大小
-	public static int R = 1;
+	public static int R = 5;
 	
 	// 是否存活
 	private boolean alive;
