@@ -5,6 +5,11 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.util.Random;
 
 import javax.swing.JFrame;
@@ -17,7 +22,7 @@ import controller.GameController;
  * 
  * @author DaiQing
  */
-public class AlgoFrame extends JFrame {
+public class AlgoFrame extends JFrame implements KeyListener, MouseWheelListener {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -33,11 +38,13 @@ public class AlgoFrame extends JFrame {
 	private int timePeriod;
 
 	private GameController controller;
-	
+	// 刷新控制器
+	private RefreshCtl refreshCtl;
+
 	// 分辨率
 	private static final int RESOLUTION_X = 1920;
 	private static final int RESOLUTION_Y = 1080;
-	
+
 	public AlgoFrame(String title) {
 		this(title, RESOLUTION_X, RESOLUTION_Y);
 	}
@@ -58,17 +65,20 @@ public class AlgoFrame extends JFrame {
 		canvas.setPreferredSize(canvas.getPreferredSize());
 		this.setContentPane(canvas);
 		this.pack();
-		
-		//TODO: set dialog, get cluster number && refresh period
-		//timePeriod =
-		int clusterInit = 3000;  
-		// start Controller 
-		controller = new GameController(clusterInit, RESOLUTION_X / LifeCircle.R, RESOLUTION_Y / LifeCircle.R); 
-		
+
+		// TODO: set dialog, get cluster number && refresh period
+		// timePeriod =
+		int clusterInit = 3000;
+
+		// start Controller
+		controller = new GameController(clusterInit, RESOLUTION_X / LifeCircle.R, RESOLUTION_Y / LifeCircle.R);
 		circles = controller.getLives();
-		
+
+		// add listener
+		this.addKeyListener(this);
+		this.addMouseWheelListener(this);
 		// fresh thread
-		RefreshCtl refreshCtl = new RefreshCtl(this, timePeriod, controller);
+		refreshCtl = new RefreshCtl(this, timePeriod, controller);
 		new Thread(refreshCtl).start();
 	}
 
@@ -115,15 +125,16 @@ public class AlgoFrame extends JFrame {
 
 			// 设置笔刷信息
 			AlgoVisHelper.setStrokeWidth(graphics2d, 10);
-			
+
 			graphics2d.setColor(Color.BLUE);
 			// 实心
-			for (int i = 0;i < circles.length; ++ i) {
-				for (int j = 0; j < circles[0].length; ++ j) {
+			for (int i = 0; i < circles.length; ++i) {
+				for (int j = 0; j < circles[0].length; ++j) {
 					LifeCircle circle = circles[i][j];
 					if (circle.isAlive())
 						AlgoVisHelper.fillCircle(graphics2d, circle.getY(), circle.getX(), LifeCircle.R);
-//						AlgoVisHelper.fillCircle(graphics2d, circle.getX(), circle.getY(), LifeCircle.R);
+					// AlgoVisHelper.fillCircle(graphics2d, circle.getX(), circle.getY(),
+					// LifeCircle.R);
 				}
 			}
 			this.removeAll();
@@ -132,6 +143,64 @@ public class AlgoFrame extends JFrame {
 		@Override
 		public Dimension getPreferredSize() {
 			return new Dimension(canvasWidth, canvasHeight);
+		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		switch (e.getKeyChar()) {
+		case 'c':
+
+			// speed up
+			refreshCtl.setRefreshPeriod(refreshCtl.getRefreshPeriod() < 10 ? refreshCtl.getRefreshPeriod()
+					: refreshCtl.getRefreshPeriod() - 10);
+			break;
+		case 'x':
+
+			// speed down
+			refreshCtl.setRefreshPeriod(refreshCtl.getRefreshPeriod() + 10);
+			break;
+		case 'z':
+			// default speed
+			refreshCtl.setRefreshPeriod(RefreshCtl.DEFAULT_SPEED);
+			break;
+		case ' ':
+			// pause
+			refreshCtl.setRefreshPeriod(1000000);
+			break;
+		default:
+			break;
+		}
+//		if (e.getKeyChar() == 'c') {
+//			// speed up
+//			refreshCtl.setRefreshPeriod(refreshCtl.getRefreshPeriod() < 10 ? refreshCtl.getRefreshPeriod()
+//					: refreshCtl.getRefreshPeriod() - 10);
+//		} else if (e.getKeyChar() == 'x') {
+//			// speed down
+//			refreshCtl.setRefreshPeriod(refreshCtl.getRefreshPeriod() + 10);
+//		} else if (e.getKeyChar() == 'z') {
+//			// default speed
+//			refreshCtl.setRefreshPeriod(RefreshCtl.DEFAULT_SPEED);
+//		} else if (e.getKeyChar() == ' ') {
+//			// pause
+//			refreshCtl.setRefreshPeriod(1000000);
+//		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+	}
+
+	@Override
+	public void mouseWheelMoved(MouseWheelEvent e) {
+		if (e.getWheelRotation() == 1) {
+			LifeCircle.R = LifeCircle.R == 15 ? 15 : LifeCircle.R + 1;
+		} else if (e.getWheelRotation() == -1) {
+			LifeCircle.R = LifeCircle.R == 1 ? 1 : LifeCircle.R - 1;
 		}
 	}
 }

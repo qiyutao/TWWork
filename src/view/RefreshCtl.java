@@ -4,6 +4,8 @@ import controller.GameController;
 
 public class RefreshCtl implements Runnable{
 	
+	public static final int DEFAULT_SPEED = 100;
+	
 	private AlgoFrame algoFrame;
 	
 	private int refreshPeriod;
@@ -12,7 +14,7 @@ public class RefreshCtl implements Runnable{
 	
 	public RefreshCtl(AlgoFrame algoFrame, int timePeriod, GameController controller) {
 		this.algoFrame = algoFrame;
-		this.refreshPeriod = timePeriod;
+		this.refreshPeriod = timePeriod == 0 ? DEFAULT_SPEED : timePeriod;
 		this.gameController = controller; 
 	}
 	
@@ -22,11 +24,19 @@ public class RefreshCtl implements Runnable{
 			gameController.nextStep();
 			algoFrame.repaint();
 			try {
-				Thread.sleep(refreshPeriod + 15);
+				Thread.sleep(refreshPeriod);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
+	public int getRefreshPeriod() {
+		return refreshPeriod;
+	}
+
+	public void setRefreshPeriod(int refreshPeriod) {
+		this.refreshPeriod = refreshPeriod;
+	}
+	
 }
