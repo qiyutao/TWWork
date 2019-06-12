@@ -11,7 +11,6 @@ public class GameMatrix {
 
 	public GameMatrix(int width, int height, int randomCluster) {
 		matrix = new boolean[width][height];
-		
 		this.width = width;
 		this.height = height;
 		this.randomCluster = randomCluster;
