@@ -1,5 +1,7 @@
-package view;
+package start;
 import java.awt.EventQueue;
+
+import view.AlgoFrame;
 
 public class Main {
 	public static void main(String[] args) {

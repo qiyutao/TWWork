@@ -1,5 +1,8 @@
 package algo;
 
+/**
+ * 
+ */
 public class GameMatrix {
 	// 随机点数目
 	private int randomCluster;
@@ -17,9 +20,9 @@ public class GameMatrix {
 		this.randomCluster = randomCluster;
 	}
 
-	public void init() {
+	public boolean[][] init() {
 		initRandomMat();
-
+		return matrix;
 	}
 
 	// 随机初始化簇
@@ -65,8 +68,7 @@ public class GameMatrix {
 		int lifeNum = 0;
 		for (int i = col - 1; i < col + 2; i++) {
 			for (int j = row - 1; j < row + 2; j++) {
-				if ((i >= 0 && i < width) && (j >= 0 && j < height) 
-						&& !(i == col && j == row)) {
+				if ((i >= 0 && i < width) && (j >= 0 && j < height) && !(i == col && j == row)) {
 					if (matrix[j][i])
 						lifeNum += matrix[j][i] == false ? 0 : 1;
 				}
