@@ -11,7 +11,7 @@ public class GameMatrix {
 
 	public GameMatrix(int width, int height, int randomCluster) {
 		matrix = new boolean[height][width];
-		
+
 		this.width = width;
 		this.height = height;
 		this.randomCluster = randomCluster;
@@ -19,7 +19,7 @@ public class GameMatrix {
 
 	public void init() {
 		initRandomMat();
-		
+
 	}
 
 	// 随机初始化簇
@@ -30,7 +30,7 @@ public class GameMatrix {
 
 			for (int j = col - 1; j < col + 2; j++) {
 				for (int k = row - 1; k < row + 2; k++) {
-					if ((j >= 0 && j <= width) && (k >= 0 && k <= height)) {
+					if ((j >= 0 && j < width) && (k >= 0 && k < height)) {
 						if (Math.random() * 2 >= 1) {
 							matrix[k][j] = true;
 						}
@@ -39,41 +39,45 @@ public class GameMatrix {
 			}
 		}
 	}
-	
-	//TODO:refactor
-	private void nextMatrix() {
-		boolean[][] newMat = new boolean[height][width] ;
-		for(int i = 0;i<height;i++) {
+
+	// TODO:refactor
+	public void nextMatrix() {
+		boolean[][] newMat = new boolean[height][width];
+		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				int lifeNum = aroundLife(i, j);
-				if(lifeNum<2) {
+				if (lifeNum < 2) {
 					newMat[i][j] = false;
-				} else if(lifeNum==2 && matrix[i][j]) {
+				} else if (lifeNum == 2 && matrix[i][j]) {
 					newMat[i][j] = true;
-				} else if(lifeNum==3) {
+				} else if (lifeNum == 3) {
 					newMat[i][j] = true;
 				} else {
 					newMat[i][j] = false;
 				}
 			}
 		}
-		
+
 		matrix = newMat;
 	}
-	
-	private int aroundLife(int row,int col) {
+
+	private int aroundLife(int row, int col) {
 		int lifeNum = 0;
 		for (int i = col - 1; i < col + 2; i++) {
 			for (int j = row - 1; j < row + 2; j++) {
-				if (( i>= 0 && i <= width) && (j >= 0 && j <= height)
-					 &&(i!=col&&j!=row)) {
-					if(matrix[i][j])
-					lifeNum += matrix[i][j] == false ? 0 : 1;
-					}
+				if ((i >= 0 && i < width) && (j >= 0 && j < height) 
+						&& !(i == col && j == row)) {
+					if (matrix[j][i])
+						lifeNum += matrix[j][i] == false ? 0 : 1;
 				}
 			}
-		
+		}
+
 		return lifeNum;
+	}
+
+	public void setMatrix(boolean[][] matrix) {
+		this.matrix = matrix;
 	}
 
 	public boolean[][] getMatrix() {

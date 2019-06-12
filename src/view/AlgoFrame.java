@@ -86,26 +86,24 @@ public class AlgoFrame extends JFrame {
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			Graphics2D graphics2d = (Graphics2D) g;
-			while (true) {
-				// 清空
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				this.removeAll();
-				// 设置渲染，抗锯齿
-				RenderingHints hints = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
-						RenderingHints.VALUE_ANTIALIAS_ON);
-				graphics2d.addRenderingHints(hints);
-
-				// 设置笔刷信息
-				AlgoVisHelper.setStrokeWidth(graphics2d, 10);
-
-				graphics2d.setColor(Color.RED);
-				// 实心
-				AlgoVisHelper.fillCircle(graphics2d, canvasWidth / 2, canvasHeight / 2, 200);
+			// 清空
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
+			this.removeAll();
+			// 设置渲染，抗锯齿
+			RenderingHints hints = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
+			graphics2d.addRenderingHints(hints);
+
+			// 设置笔刷信息
+			AlgoVisHelper.setStrokeWidth(graphics2d, 10);
+
+			graphics2d.setColor(Color.RED);
+			// 实心
+			AlgoVisHelper.fillCircle(graphics2d, canvasWidth / 2, canvasHeight / 2, 200);
 		}
 
 		@Override
