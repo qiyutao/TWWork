@@ -18,6 +18,8 @@ public class Dialog extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private int speed;
 	private int initImage;
+	
+	private volatile boolean exist;
 
 	/**
 	 * Launch the application.
@@ -27,6 +29,12 @@ public class Dialog extends JDialog {
 			Dialog dialog = new Dialog();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
+			dialog.exist = true;
+			while(true) {
+				if (!dialog.exist) {
+					dialog.setVisible(false);
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -69,8 +77,9 @@ public class Dialog extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						System.out.println("xxx");
 						speed =  comboBox.getSelectedIndex()+1;
-						
+						exist = false;
 					}
 				});
 				okButton.setActionCommand("OK");

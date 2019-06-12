@@ -50,7 +50,7 @@ public class AlgoFrame extends JFrame {
 
 		// set frame basic info
 		this.setSize(canvasWidth, canvasHeight);
-//		this.setResizable(false);
+		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 
