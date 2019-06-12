@@ -6,25 +6,21 @@ package view;
  *
  */
 public class Circle {
-	public int x,y;
-	private int r;
-	public int vx, vy;
 	
-	public Circle(int x, int y, int r, int vx, int vy) {
+	// 圆心坐标
+	private int x,y;
+	
+	// 圆的半径大小
+	private int r = 1;
+	
+	public Circle(int x, int y, int r) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.r = r;
-		this.vx = vx;
-		this.vy = vy;
 	}
 
 	public int getR() {
 		return r;
-	}
-	
-	public void move() {
-		x += vx;
-		y += vy;
 	}
 }
