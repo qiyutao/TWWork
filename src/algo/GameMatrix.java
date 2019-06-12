@@ -1,5 +1,7 @@
 package algo;
 
+import sun.nio.cs.FastCharsetProvider;
+
 public class GameMatrix {
 	// 随机点数目
 	private int randomCluster;
@@ -39,13 +41,38 @@ public class GameMatrix {
 			}
 		}
 	}
-
+	
+	//TODO:refactor
 	private void nextMatrix() {
 		for(int i = 0;i<height;i++) {
 			for (int j = 0; j < width; j++) {
-				
+				int lifeNum = aroundLife(i, j);
+				if(lifeNum<2) {
+					matrix[i][j] = false;
+				} else if(lifeNum==2 && matrix[i][j]) {
+					matrix[i][j] = true;
+				} else if(lifeNum==3) {
+					matrix[i][j] = true;
+				} else {
+					matrix[i][j] = false;
+				}
 			}
 		}
+	}
+	
+	private int aroundLife(int row,int col) {
+		int lifeNum = 0;
+		for (int i = col - 1; i < col + 2; i++) {
+			for (int j = row - 1; j < row + 2; j++) {
+				if (( i>= 0 && i <= width) && (j >= 0 && j <= height)
+					 &&(i!=col&&j!=row)) {
+					if(matrix[i][j])
+					lifeNum += matrix[i][j] == false ? 0 : 1;
+					}
+				}
+			}
+		
+		return lifeNum;
 	}
 
 	public boolean[][] getMatrix() {
