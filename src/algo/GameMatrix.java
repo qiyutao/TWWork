@@ -12,6 +12,11 @@ public class GameMatrix {
 	private int width;
 	private int height;
 
+	/**
+	 * @param width
+	 * @param height
+	 * @param randomCluster
+	 */
 	public GameMatrix(int width, int height, int randomCluster) {
 		matrix = new boolean[height][width];
 

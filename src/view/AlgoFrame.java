@@ -32,7 +32,7 @@ public class AlgoFrame extends JFrame {
 	// 刷新频率
 	private int timePeriod;
 
-	GameController controller;
+	private GameController controller;
 	
 	// 分辨率
 	private static final int RESOLUTION_X = 1800;
@@ -50,7 +50,7 @@ public class AlgoFrame extends JFrame {
 
 		// set frame basic info
 		this.setSize(canvasWidth, canvasHeight);
-		this.setResizable(false);
+//		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 
@@ -61,7 +61,7 @@ public class AlgoFrame extends JFrame {
 		
 		//TODO: set dialog, get cluster number && refresh period
 		//timePeriod =
-		int clusterInit = 3;  
+		int clusterInit = 3000;  
 		// start Controller 
 		controller = new GameController(timePeriod, clusterInit, RESOLUTION_X /2, RESOLUTION_Y / 2); 
 		
@@ -116,12 +116,20 @@ public class AlgoFrame extends JFrame {
 			// 设置笔刷信息
 			AlgoVisHelper.setStrokeWidth(graphics2d, 10);
 			
-			if (new Random().nextDouble() < 0.5)
-				graphics2d.setColor(Color.RED);
-			else
-				graphics2d.setColor(Color.BLUE);
+//			if (new Random().nextDouble() < 0.5)
+//				graphics2d.setColor(Color.RED);
+//			else
+			graphics2d.setColor(Color.BLUE);
 			// 实心
-			AlgoVisHelper.fillCircle(graphics2d, canvasWidth / 2, canvasHeight / 2, 200);
+			for (int i = 0;i < circles.length; ++ i) {
+				for (int j = 0; j < circles[0].length; ++ j) {
+					LifeCircle circle = circles[i][j];
+					if (circle.isAlive())
+						AlgoVisHelper.fillCircle(graphics2d, circle.getX(), circle.getY(), 2);
+				}
+			}
+//			AlgoVisHelper.fillCircle(graphics2d, canvasWidth / 2, canvasHeight / 2, 200);
+			this.removeAll();
 		}
 
 		@Override

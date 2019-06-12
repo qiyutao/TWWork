@@ -12,13 +12,14 @@ public class RefreshCtl implements Runnable{
 	
 	public RefreshCtl(AlgoFrame algoFrame, int timePeriod, GameController controller) {
 		this.algoFrame = algoFrame;
-		this.refreshPeriod = refreshPeriod;
-		this.gameController = gameController; 
+		this.refreshPeriod = timePeriod;
+		this.gameController = controller; 
 	}
 	
 	@Override
 	public void run() {
 		while(true) {
+			gameController.nextStep();
 			algoFrame.repaint();
 			try {
 				Thread.sleep(refreshPeriod);
