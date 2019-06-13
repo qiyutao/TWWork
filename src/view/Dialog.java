@@ -8,13 +8,14 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class Dialog extends JDialog {
 
+	private static final long serialVersionUID = 1L;
+	
 	private final JPanel contentPanel = new JPanel();
 	private int speed;
 	private int initImage;
@@ -37,7 +38,7 @@ public class Dialog extends JDialog {
 		label.setBounds(40, 121, 98, 39);
 		contentPanel.add(label);
 
-		JComboBox comboBox = new JComboBox();
+		JComboBox<Integer> comboBox = new JComboBox<Integer>();
 		for (int i = 1; i <= 10; i++) {
 			comboBox.addItem(i);
 		}
@@ -45,7 +46,7 @@ public class Dialog extends JDialog {
 		comboBox.setBounds(201, 34, 110, 27);
 		contentPanel.add(comboBox);
 
-		JComboBox comboBox_1 = new JComboBox();
+		JComboBox<String> comboBox_1 = new JComboBox<String>();
 		comboBox_1.addItem("随机");
 		comboBox_1.addItem("机枪");
 		comboBox_1.addItem("飞船");

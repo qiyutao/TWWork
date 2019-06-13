@@ -1,16 +1,13 @@
 package view;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -33,12 +30,6 @@ public class AlgoFrame extends JFrame implements KeyListener, MouseWheelListener
 
 	// 生命circle
 	private LifeCircle[][] circles;
-
-	// 刷新频率
-	private int timePeriod;
-	
-	// 初始化速度 初始图像
-	private int speed;
 
 	private GameController controller;
 	// 刷新控制器
@@ -69,10 +60,8 @@ public class AlgoFrame extends JFrame implements KeyListener, MouseWheelListener
 		this.setContentPane(canvas);
 		this.pack();
 
-		// TODO: set dialog, get cluster number && refresh period
-		// timePeriod =
+		
 		int clusterInit = 3000;
-
 		// start Controller
 		controller = new GameController(clusterInit, RESOLUTION_X / LifeCircle.R, RESOLUTION_Y / LifeCircle.R,
 				initImage);
@@ -82,7 +71,7 @@ public class AlgoFrame extends JFrame implements KeyListener, MouseWheelListener
 		this.addKeyListener(this);
 		this.addMouseWheelListener(this);
 		// fresh thread
-		refreshCtl = new RefreshCtl(this, timePeriod, controller);
+		refreshCtl = new RefreshCtl(this, speed, controller);
 		new Thread(refreshCtl).start();
 	}
 
@@ -109,6 +98,8 @@ public class AlgoFrame extends JFrame implements KeyListener, MouseWheelListener
 	 * @author DaiQing
 	 */
 	private class AlgoCanvas extends JPanel {
+
+		private static final long serialVersionUID = 1L;
 
 		public AlgoCanvas() {
 			// 设置双缓存

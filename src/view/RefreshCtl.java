@@ -2,25 +2,26 @@ package view;
 
 import controller.GameController;
 
-public class RefreshCtl implements Runnable{
-	
+public class RefreshCtl implements Runnable {
+
 	public static final int DEFAULT_SPEED = 100;
-	
+
 	private AlgoFrame algoFrame;
-	
+
 	private int refreshPeriod;
-	
+
 	private GameController gameController;
-	
+
 	public RefreshCtl(AlgoFrame algoFrame, int timePeriod, GameController controller) {
 		this.algoFrame = algoFrame;
-		this.refreshPeriod = timePeriod == 0 ? DEFAULT_SPEED : timePeriod;
-		this.gameController = controller; 
+		this.refreshPeriod = timePeriod == 0 ? DEFAULT_SPEED : (11 - timePeriod) * 20;
+		System.out.println(refreshPeriod);
+		this.gameController = controller;
 	}
-	
+
 	@Override
 	public void run() {
-		while(true) {
+		while (true) {
 			gameController.nextStep();
 			algoFrame.repaint();
 			try {
@@ -38,5 +39,5 @@ public class RefreshCtl implements Runnable{
 	public void setRefreshPeriod(int refreshPeriod) {
 		this.refreshPeriod = refreshPeriod;
 	}
-	
+
 }
