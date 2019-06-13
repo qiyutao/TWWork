@@ -36,23 +36,26 @@ public class AlgoFrame extends JFrame implements KeyListener, MouseWheelListener
 
 	// 刷新频率
 	private int timePeriod;
+	
+	// 初始化速度 初始图像
+	private int speed;
 
 	private GameController controller;
 	// 刷新控制器
 	private RefreshCtl refreshCtl;
 
 	// 分辨率
-	private static final int RESOLUTION_X = 1920;
-	private static final int RESOLUTION_Y = 1080;
+	public static final int RESOLUTION_X = 1920;
+	public static final int RESOLUTION_Y = 1080;
 
 	public AlgoFrame(String title) {
 		this(title, RESOLUTION_X, RESOLUTION_Y);
 	}
 
-	public AlgoFrame(String title, int canvasWidth, int canvasHeight) {
+	public AlgoFrame(String title, int speed, int initImage) {
 		super(title);
-		this.canvasWidth = canvasWidth;
-		this.canvasHeight = canvasHeight;
+		this.canvasWidth = RESOLUTION_X;
+		this.canvasHeight = RESOLUTION_Y;
 		AlgoCanvas canvas = new AlgoCanvas();
 
 		// set frame basic info
@@ -71,7 +74,8 @@ public class AlgoFrame extends JFrame implements KeyListener, MouseWheelListener
 		int clusterInit = 3000;
 
 		// start Controller
-		controller = new GameController(clusterInit, RESOLUTION_X / LifeCircle.R, RESOLUTION_Y / LifeCircle.R);
+		controller = new GameController(clusterInit, RESOLUTION_X / LifeCircle.R, RESOLUTION_Y / LifeCircle.R,
+				initImage);
 		circles = controller.getLives();
 
 		// add listener
@@ -125,16 +129,14 @@ public class AlgoFrame extends JFrame implements KeyListener, MouseWheelListener
 
 			// 设置笔刷信息
 			AlgoVisHelper.setStrokeWidth(graphics2d, 10);
-
-			graphics2d.setColor(Color.BLUE);
 			// 实心
 			for (int i = 0; i < circles.length; ++i) {
 				for (int j = 0; j < circles[0].length; ++j) {
 					LifeCircle circle = circles[i][j];
-					if (circle.isAlive())
+					if (circle.isAlive()) {
+						graphics2d.setColor(circle.getColor());
 						AlgoVisHelper.fillCircle(graphics2d, circle.getY(), circle.getX(), LifeCircle.R);
-					// AlgoVisHelper.fillCircle(graphics2d, circle.getX(), circle.getY(),
-					// LifeCircle.R);
+					}
 				}
 			}
 			this.removeAll();
